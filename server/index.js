@@ -1,11 +1,12 @@
+require('dotenv').config();
 var express = require('express');
 var bodyParser = require('body-parser');
 var querystring = require('querystring');
 
 var {addUser} = require('../database-mongo/index');
 
-client_id='3dc3d1c022da436387b45bcf805279c0';
-redirect_uri = 'http://127.0.0.1:3000/';
+let client_id = process.env.SPOTIFY_CLIENT_ID;
+let redirect_uri = 'http://127.0.0.1:3000/';
 
 let app = express();
 

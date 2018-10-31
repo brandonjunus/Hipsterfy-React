@@ -1,14 +1,38 @@
+import styled from 'styled-components';
 import React from 'react';
 import { BrowserRouter as Router, Route, Link, Switch} from "react-router-dom";
 import $ from 'jquery';
+import { TransitionGroup, CSSTransition } from "react-transition-group";
+import ReactCSSTransitionGroup from 'react-addons-css-transition-group';
 
 import Landing from '../components/Landing.jsx';
 import Profile from '../components/Profile.jsx';
 import Tracks from '../components/Tracks.jsx';
 import Artists from '../components/Artists.jsx';
 import ArtistsAndTracks from '../components/ArtistsAndTracks.jsx';
+import MoreArtistsAndTracks from '../components/MoreArtistsAndTracks.jsx';
+import TestChart from '../components/TestChart.jsx';
 
-import Chart from '../components/BarChartMain.jsx';
+const Wrapper = styled.div`
+  .example-enter {
+    opacity: 0.01;
+  }
+
+  .example-enter.example-enter-active {
+    opacity: 1;
+    transition: opacity 1000ms ease-in;
+  }
+
+  .example-leave {
+    opacity: 1;
+  }
+
+  .example-leave.example-leave-active {
+    opacity: 0.01;
+    // transition: opacity 3000ms ease-in;
+  }
+`;
+
 
 class HipsterfyRouter extends React.Component {
   constructor(props) {
@@ -19,8 +43,11 @@ class HipsterfyRouter extends React.Component {
       tracksAveragePopularity: null,
       artists: null,
       artistsAveragePopularity: null, 
-      hasBeenSent: false
+      hasBeenSent: false,
+      currentPage: "MoreArtistsAndTracks", // Should start at "Landing"
     }
+
+    this.changeToNextPage = this.changeToNextPage.bind(this);
   }
 
   findAveragePopularityOfItems(items){
@@ -30,7 +57,24 @@ class HipsterfyRouter extends React.Component {
     return averagePopularity;
   }
 
+  changeToNextPage(){
+    const {currentPage} = this.state
+    switch(currentPage) {
+      case "Landing":
+          this.setState({
+            currentPage: "ArtistsAndTracks"
+          })
+          break;
+      case "ArtistsAndTracks":
+          this.setState({
+            currentPage: "MoreArtistsAndTracks"
+          })
+          break;
+    }
+  }
+
   componentDidMount() {
+
     let access_token = window.location.hash.match(/\#(?:access_token)\=([\S\s]*?)\&/)[1];
 
     // user data
@@ -118,27 +162,49 @@ class HipsterfyRouter extends React.Component {
   }
 
   render () {
-    return (
-    <Router>
-        <div>
-          <Link to="/landing">Visit landing |</Link>
-          <Link to="/artistsandtracks">Visit Artist and Tracks Page  |</Link>
-          <Link to="/tracks">Visit tracks</Link>
-          <Link to="/chart">Visit chart</Link>
-          {/* <Link to="/artists">Visit artists</Link> */}
-          {/* <Link to="/profile">Visit profile</Link> */}
-          <hr />
-            <Switch>
-                <Route path="/landing" render={() => <Landing tracksAveragePopularity={this.state.tracksAveragePopularity} artistsAveragePopularity={this.state.artistsAveragePopularity} profile={this.state.profile}/>}  />
-                <Route path="/artistsandtracks" render={() => <ArtistsAndTracks tracks={this.state.tracks} artists={this.state.artists} profile={this.state.profile} tracksAveragePopularity={this.state.tracksAveragePopularity} artistsAveragePopularity={this.state.artistsAveragePopularity}/>} />
-                <Route path="/tracks" render={() => <Tracks tracks={this.state.tracks}/>} />
-                <Route path="/artists" render={() => <Artists artists={this.state.artists} />} />
-                <Route path="/profile" render={() => <Profile profile={this.state.profile} />} />
-                <Route path="/chart" render={() => <Chart tracks={this.state.tracks}/>} />
-            </Switch>
-        </div>
-    </Router>
-    )
+    console.log("window location", window.location.pathname);
+    const { tracksAveragePopularity, artistsAveragePopularity, profile, tracks, artists, currentPage } = this.state;
+    if (tracksAveragePopularity && artistsAveragePopularity && profile && tracks && artists && window.location.pathname === '/'){
+        return (
+          <Wrapper>
+            <ReactCSSTransitionGroup
+              transitionName="example"
+              transitionEnterTimeout={3000}
+              transitionLeaveTimeout={3000}>
+              {currentPage === "Landing" &&
+                <Landing 
+                  tracksAveragePopularity={tracksAveragePopularity} 
+                  artistsAveragePopularity={artistsAveragePopularity} 
+                  profile={profile} 
+                  changeToNextPage={this.changeToNextPage}
+                />  
+              }
+              {currentPage === "ArtistsAndTracks" &&
+              <ArtistsAndTracks 
+                tracks={tracks} 
+                artists={artists} 
+                profile={profile} 
+                tracksAveragePopularity={tracksAveragePopularity} 
+                artistsAveragePopularity={artistsAveragePopularity}
+                changeToNextPage={this.changeToNextPage}
+              />
+              }
+              {currentPage === "MoreArtistsAndTracks" &&
+              <MoreArtistsAndTracks 
+                tracks={tracks} 
+                artists={artists} 
+                profile={profile} 
+                tracksAveragePopularity={tracksAveragePopularity} 
+                artistsAveragePopularity={artistsAveragePopularity}
+                changeToNextPage={this.changeToNextPage}
+              />
+              }
+            </ReactCSSTransitionGroup>
+          </Wrapper>
+        )
+    } else {
+      return (<div>Loading...</div>)
+    }
   }
 }
 
