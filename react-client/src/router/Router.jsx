@@ -6,12 +6,14 @@ import { TransitionGroup, CSSTransition } from "react-transition-group";
 import ReactCSSTransitionGroup from 'react-addons-css-transition-group';
 
 import Landing from '../components/Landing.jsx';
-import Profile from '../components/Profile.jsx';
-import Tracks from '../components/Tracks.jsx';
-import Artists from '../components/Artists.jsx';
+// import Profile from '../components/Profile.jsx';
+// import Tracks from '../components/Tracks.jsx';
+// import Artists from '../components/Artists.jsx';
 import ArtistsAndTracks from '../components/ArtistsAndTracks.jsx';
 import MoreArtistsAndTracks from '../components/MoreArtistsAndTracks.jsx';
-import TestChart from '../components/TestChart.jsx';
+import Genres from '../components/Genres.jsx';
+import Share from '../components/Share.jsx';
+// import TestChart from '../components/TestChart.jsx';
 
 const Wrapper = styled.div`
   .example-enter {
@@ -44,7 +46,7 @@ class HipsterfyRouter extends React.Component {
       artists: null,
       artistsAveragePopularity: null, 
       hasBeenSent: false,
-      currentPage: "MoreArtistsAndTracks", // Should start at "Landing"
+      currentPage: "Landing", // Should start at "Landing"
     }
 
     this.changeToNextPage = this.changeToNextPage.bind(this);
@@ -57,20 +59,10 @@ class HipsterfyRouter extends React.Component {
     return averagePopularity;
   }
 
-  changeToNextPage(){
-    const {currentPage} = this.state
-    switch(currentPage) {
-      case "Landing":
-          this.setState({
-            currentPage: "ArtistsAndTracks"
-          })
-          break;
-      case "ArtistsAndTracks":
-          this.setState({
-            currentPage: "MoreArtistsAndTracks"
-          })
-          break;
-    }
+  changeToNextPage(page){
+    this.setState({
+      currentPage: page
+    })
   }
 
   componentDidMount() {
@@ -162,7 +154,6 @@ class HipsterfyRouter extends React.Component {
   }
 
   render () {
-    console.log("window location", window.location.pathname);
     const { tracksAveragePopularity, artistsAveragePopularity, profile, tracks, artists, currentPage } = this.state;
     if (tracksAveragePopularity && artistsAveragePopularity && profile && tracks && artists && window.location.pathname === '/'){
         return (
@@ -191,6 +182,26 @@ class HipsterfyRouter extends React.Component {
               }
               {currentPage === "MoreArtistsAndTracks" &&
               <MoreArtistsAndTracks 
+                tracks={tracks} 
+                artists={artists} 
+                profile={profile} 
+                tracksAveragePopularity={tracksAveragePopularity} 
+                artistsAveragePopularity={artistsAveragePopularity}
+                changeToNextPage={this.changeToNextPage}
+              />
+              }
+              {/* {currentPage === "Genre" &&
+              <Genres 
+                tracks={tracks} 
+                artists={artists} 
+                profile={profile} 
+                tracksAveragePopularity={tracksAveragePopularity} 
+                artistsAveragePopularity={artistsAveragePopularity}
+                changeToNextPage={this.changeToNextPage}
+              />
+              } */}
+              {currentPage === "Share" &&
+              <Share 
                 tracks={tracks} 
                 artists={artists} 
                 profile={profile} 

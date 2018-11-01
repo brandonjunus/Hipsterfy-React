@@ -22,13 +22,13 @@ const ArtistsBorder = styled.div`
 `
 
 const ArtistImage = styled.img`
-    height: 25%;
-    width: 25%;
+    height: 15%;
+    width: 15%;
     // margin-left: auto;
 `
 const AlbumImage = styled.img`
-    height: 25%;
-    width: 25%;
+    height: 15%;
+    width: 15%;
 `
 
 const ArtistsAndTracksContainer = styled.div`
@@ -135,7 +135,6 @@ const ArtistsAndTracks = (props) => {
         }
         for (let i = 0; i < 3; i++){
             let trackArtists = trackItems[i].artists.map(artist => artist.name);
-            console.log('track artists', trackArtists);  
             tracksToRender.push(
                 <Track key={i}>
                     <Border>
@@ -149,30 +148,6 @@ const ArtistsAndTracks = (props) => {
                 </Track>
             )
         }
-        // const artistsToRender = artistItems.map((artist, index) =>
-        //     <Artist key={index}>
-        //         <ArtistsBorder>
-        //             <ArtistInfo>
-        //                 <ArtistName>{artist.name}</ArtistName>
-        //                 <ArtistCardInfo>Hipster Level: {100 - artist.popularity}</ArtistCardInfo>
-        //                 <SeeMoreDetails>See More Details...</SeeMoreDetails>
-        //             </ArtistInfo>
-        //             <ArtistImage src={artist.images[2].url} />
-        //         </ArtistsBorder>
-        //     </Artist>
-        // )
-        // const tracksToRender = trackItems.map((track, index) =>
-        //     <Track key={index}>
-        //         <Border>
-        //             <AlbumImage src={track.album.images[1].url}></AlbumImage>
-        //             <TrackInfo>
-        //                 {track.name}
-        //                 <div>Hipster Level: {100 - track.popularity}</div>
-        //                 <div>{track.artists.map((artist, index) => <div key={index}>{artist.name}</div>)}</div>
-        //             </TrackInfo>
-        //         </Border>
-        //     </Track>
-        // );
         return (
             <div>
                 <Title>
@@ -186,8 +161,11 @@ const ArtistsAndTracks = (props) => {
                             {tracksToRender} 
                     </Tracks>
                 </ArtistsAndTracksContainer>
-                <Title onClick={() => changeToNextPage()}>
-                    See More of your Top Artists and Songs
+                {/* <Title onClick={() => changeToNextPage("Genres")}>
+                    See All Your Top Genres
+                </Title> */}
+                <Title onClick={() => changeToNextPage("MoreArtistsAndTracks")}>
+                    See All Your Top Artists and Songs
                 </Title>
             </div>
         );

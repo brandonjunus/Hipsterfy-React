@@ -68,6 +68,7 @@ class Landing extends React.Component {
     constructor(props) {
         super(props);
     }
+
     render(){
         const {artistsAveragePopularity, tracksAveragePopularity, changeToNextPage} = this.props
         const {display_name} = this.props.profile;
@@ -85,7 +86,7 @@ class Landing extends React.Component {
                         {hipsterSlogan}
                     </YourHipsterSlogan>
                     <StyledLink>
-                        <a href="#" onClick={() => changeToNextPage()}>Lets see what makes you so basic...</a>
+                        <a href="#" onClick={() => changeToNextPage("ArtistsAndTracks")}>Lets see what makes you so basic...</a>
                     </StyledLink>
                 </Border>
             </LandingPageContainer>

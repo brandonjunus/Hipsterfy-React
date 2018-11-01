@@ -16,14 +16,13 @@ const Border = styled.div`
     // margin: auto auto auto 20px;
 `
 
-const ArtistsBorder = styled.div`
-    display: flex;
+const ArtistsBorder = styled.div`  
     // align-items: stretch;
 `
 
 const ArtistImage = styled.img`
-    height: 25%;
-    width: 25%;
+    // height: 25%;
+    // width: 25%;
     // margin-left: auto;
 `
 const AlbumImage = styled.img`
@@ -35,11 +34,13 @@ const ArtistsAndTracksContainer = styled.div`
     display: flex;
     // width: auto;
 `
-const Artists = styled.ul`
-    width: 50%
+const Artists = styled.div`
+    flex: 1 0 50%;
+    // width: 50%;
     padding-right: 40px;
 `
 const Artist = styled.li`
+    flex: 20%;
     margin-bottom: 20px;
     list-style: none;
 `
@@ -68,13 +69,13 @@ const ArtistInfo = styled.div`
 const ArtistName = styled.div`
     @import url('https://fonts.googleapis.com/css?family=Playfair+Display');
     font-family: 'Playfair Display', serif;
-    font-size: 75px;
+    font-size: 30px;
 `
 
 const ArtistCardInfo = styled.div`
     @import url('https://fonts.googleapis.com/css?family=Playfair+Display');
     font-family: 'Playfair Display', serif;
-    font-size: 30px;
+    font-size: 10px;
 `
 
 const SeeMoreDetails = styled.div`
@@ -114,69 +115,39 @@ const BottomTitle = styled.div`
 
 
 const MoreArtistsAndTracks = (props) => {
-    const {artists, profile, tracks, artistsAveragePopularity, tracksAveragePopularity} = props;
+    const {artists, profile, tracks, artistsAveragePopularity, tracksAveragePopularity, changeToNextPage} = props;
     const artistItems = artists.items;
     const trackItems = tracks.items;
-    // if (artists, profile, tracks, artistsAveragePopularity, tracksAveragePopularity){
-    //     let artistsToRender = [];
-    //     let tracksToRender = [];
-    //     for (let i = 0; i < 3; i++){
-    //         artistsToRender.push(
-    //             <Artist key={i}>
-    //                 <ArtistsBorder>
-    //                     <ArtistInfo>
-    //                         <ArtistName>{artistItems[i].name}</ArtistName>
-    //                         <ArtistCardInfo>Hipster Level: {100 - artistItems[i].popularity}</ArtistCardInfo>
-    //                     </ArtistInfo>
-    //                     <ArtistImage src={artistItems[i].images[2].url} />
-    //                 </ArtistsBorder>
-    //             </Artist>
-    //         )
-    //     }
-    //     for (let i = 0; i < 3; i++){
-    //         let trackArtists = trackItems[i].artists.map(artist => artist.name);
-    //         console.log('track artists', trackArtists);  
-    //         tracksToRender.push(
-    //             <Track key={i}>
-    //                 <Border>
-    //                     <AlbumImage src={trackItems[i].album.images[1].url}></AlbumImage>
-    //                     <TrackInfo>
-    //                         <TrackName>{trackItems[i].name}</TrackName>
-    //                         <TrackCardInfo>{trackArtists.join(', ')}</TrackCardInfo>
-    //                         <TrackHipsterLevel>Hipster Level: {100 - trackItems[i].popularity}</TrackHipsterLevel>
-    //                     </TrackInfo>
-    //                 </Border>
-    //             </Track>
-    //         )
-    //     }
-        // const artistsToRender = artistItems.map((artist, index) =>
-        //     <Artist key={index}>
-        //         <ArtistsBorder>
-        //             <ArtistInfo>
-        //                 <ArtistName>{artist.name}</ArtistName>
-        //                 <ArtistCardInfo>Hipster Level: {100 - artist.popularity}</ArtistCardInfo>
-        //                 <SeeMoreDetails>See More Details...</SeeMoreDetails>
-        //             </ArtistInfo>
-        //             <ArtistImage src={artist.images[2].url} />
-        //         </ArtistsBorder>
-        //     </Artist>
-        // )
-        // const tracksToRender = trackItems.map((track, index) =>
-        //     <Track key={index}>
-        //         <Border>
-        //             <AlbumImage src={track.album.images[1].url}></AlbumImage>
-        //             <TrackInfo>
-        //                 {track.name}
-        //                 <div>Hipster Level: {100 - track.popularity}</div>
-        //                 <div>{track.artists.map((artist, index) => <div key={index}>{artist.name}</div>)}</div>
-        //             </TrackInfo>
-        //         </Border>
-        //     </Track>
-        // );
+        const artistsToRender = artistItems.map((artist, index) =>
+            <Artist key={index}>
+                <ArtistsBorder>
+                    <ArtistInfo>
+                    <ArtistImage src={artist.images[2].url} />
+                        <ArtistName>{artist.name}</ArtistName>
+                        <ArtistCardInfo>Hipster Level: {100 - artist.popularity}</ArtistCardInfo>
+                        <SeeMoreDetails>See More Details...</SeeMoreDetails>
+                    </ArtistInfo>
+                </ArtistsBorder>
+            </Artist>
+        )
+        const tracksToRender = trackItems.map((track, index) =>
+            <Track key={index}>
+                <Border>
+                    <AlbumImage src={track.album.images[1].url}></AlbumImage>
+                    <TrackInfo>
+                        {track.name}
+                        <div>Hipster Level: {100 - track.popularity}</div>
+                        <div>{track.artists.map((artist, index) => <div key={index}>{artist.name}</div>)}</div>
+                    </TrackInfo>
+                </Border>
+            </Track>
+        );
         return (
             <div>
-                Hello
-                {/* <Title>
+                <Title onClick={() => changeToNextPage("Share")}>
+                    Share to Facebook?
+                </Title>
+                <Title>
                     Your Top Listned to Artists and Songs of All Time...
                 </Title>
                 <ArtistsAndTracksContainer>
@@ -187,9 +158,6 @@ const MoreArtistsAndTracks = (props) => {
                             {tracksToRender} 
                     </Tracks>
                 </ArtistsAndTracksContainer>
-                <Title>
-                    See More of your Top Artists and Songs
-                </Title> */}
             </div>
         );
     }

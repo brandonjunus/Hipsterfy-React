@@ -4,6 +4,35 @@
   <title>Item List</title>
 </head>
 <body>
+  <script>
+    window.fbAsyncInit = function() {
+      FB.init({
+        appId      : '338183503623809',
+        xfbml      : true,
+        version    : 'v3.2'
+      });
+      FB.AppEvents.logPageView();
+    };
+  
+    (function(d, s, id){
+       var js, fjs = d.getElementsByTagName(s)[0];
+       if (d.getElementById(id)) {return;}
+       js = d.createElement(s); js.id = id;
+       js.src = "https://connect.facebook.net/en_US/sdk.js";
+       fjs.parentNode.insertBefore(js, fjs);
+     }(document, 'script', 'facebook-jssdk'));
+  </script>
+  <!-- <div id="shareBtn" class="btn btn-success clearfix">Share</div>
+  <script>
+    document.getElementById('shareBtn').onclick = function() {
+      FB.ui({
+        method: 'share',
+        display: 'popup',
+        quote: 'help me eddie',
+        href: "https://www.google.com",
+      }, function(response){});
+    }
+  </script> -->
 <div id="app"></div>
 <script type="text/javascript" src="bundle.js"></script>
 </body>
