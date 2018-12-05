@@ -1,117 +1,159 @@
-import styled from 'styled-components';
+import styled, { keyframes } from 'styled-components';
 import React from 'react';
 
-
+// Your Top Listened to Artists and Songs of All Time...
 const Title = styled.div`
-    @import url('https://fonts.googleapis.com/css?family=Playfair+Display');
-    font-family: 'Playfair Display', serif;
-    font-size: 50px;
-    margin: 0 auto 20px;
-    text-align: center;
+  font-size: 2.8em;
+  font-family: "HelveticaNeue-Light", "Helvetica Neue Light", "Helvetica Neue", Helvetica, Arial, "Lucida Grande", sans-serif;
+  font-weight: 300;
+  margin: 0 auto 20px;
+  text-align: center;
+	padding: 1em 0;
+`
+
+const SeeMore = styled.div`
+  font-size: 1em;
+  font-family: "HelveticaNeue-Light", "Helvetica Neue Light", "Helvetica Neue", Helvetica, Arial, "Lucida Grande", sans-serif;
+  font-weight: 300;
+  margin: 0 auto 20px;
+  text-align: center;
+  padding: 1em;
+  background-color: #46f;
+  color: white;
+  cursor:pointer;
+  display:inline-block;
+  margin: 0 auto;
+  border-radius: 6px;
 `
 
 const Border = styled.div`
-    display: flex;
-    border: solid;
-    // margin: auto auto auto 20px;
+  display: block;
 `
 
 const ArtistsBorder = styled.div`
-    display: flex;
-    // align-items: stretch;
+	display: flex;
+  justify-content: center;
+  align-items: center;
+  color: rgba(0, 0, 20, 0.8);
 `
 
+const ArtistImagehoverIn = keyframes`
+	from {filter: blur(${props => Math.round((props.hipsterRating * 10) / 100)}px);}
+	to {filter: blur(0px);}
+`;
+
+const ArtistImagehoverOut = keyframes`
+	from {filter: blur(0px);}
+	to {filter: blur(${props => Math.round((props.hipsterRating * 10) / 100)}px);}
+`;
+
 const ArtistImage = styled.img`
-    height: 15%;
-    width: 15%;
-    // margin-left: auto;
+	display: block;
+	max-width: 250px;
+	width: auto;
+	height: 160px;
+	margin: 0 15px;
+	align-self: center;
+  padding: 1em;
+	filter: blur(${props => Math.round((props.hipsterRating * 10) / 100)}px)
+					brightness(200%)
+					grayscale(50%);
+	animation: ${ArtistImagehoverOut} 0.1s;
+	border-radius: 50%;
+	&:hover {
+    animation: ${ArtistImagehoverIn} 0.3s;
+		animation-fill-mode: forwards;
+	}
 `
+
 const AlbumImage = styled.img`
-    height: 15%;
-    width: 15%;
+	display: block;
+	max-width: 200px;
+	width: 40%;
+	height: auto;
+	align-self: center;
+	border-radius: 3px;
 `
 
 const ArtistsAndTracksContainer = styled.div`
-    display: flex;
-    // width: auto;
+  display: block;
 `
+
 const Artists = styled.ul`
-    width: 50%
-    padding-right: 40px;
+  font-family: "HelveticaNeue-Light", "Helvetica Neue Light", "Helvetica Neue", Helvetica, Arial, "Lucida Grande", sans-serif;
+	width: 80%;
+	line-height:0px;
+	padding: 0;
+	margin: 0 auto;
+	text-align: center;
 `
+// width: 47%;
+// padding: 0 1.5%;
+
 const Artist = styled.li`
-    margin-bottom: 20px;
-    list-style: none;
+  list-style: none;
+	display: inline-block;
 `
 
 const Tracks = styled.ul`
-    width: 50%;
-    padding-right: 40px;
-    border: solid;
+  font-family: "HelveticaNeue-Light", "Helvetica Neue Light", "Helvetica Neue", Helvetica, Arial, "Lucida Grande", sans-serif;
+  width: 50%;
+  padding-right: 40px;
 `
 
 const Track = styled.li`
-    margin-bottom: 20px;
-    list-style: none;
+  margin-bottom: 20px;
+  list-style: none;
 `
 
 const TrackInfo = styled.div`
-    border: solid;
-    margin: auto auto auto 20px;
+  margin: auto auto auto 20px;
 `
 
 const ArtistInfo = styled.div`
-    border: solid;
-    text-align: right;
-    margin: auto 20px auto auto;
+	text-align: center;
+	margin: auto 20px auto auto;
+	position: absolute;
+	line-height: 2.5em;
+	cursor: default;
+	border-radius: 5%;
+	pointer-events: none;
 `
 const ArtistName = styled.div`
-    @import url('https://fonts.googleapis.com/css?family=Playfair+Display');
-    font-family: 'Playfair Display', serif;
-    font-size: 75px;
+  font-size: 1.2em;
+  font-family: "HelveticaNeue-Light", "Helvetica Neue Light", "Helvetica Neue", Helvetica, Arial, "Lucida Grande", sans-serif;
 `
 
 const ArtistCardInfo = styled.div`
-    @import url('https://fonts.googleapis.com/css?family=Playfair+Display');
-    font-family: 'Playfair Display', serif;
-    font-size: 30px;
-`
-
-const SeeMoreDetails = styled.div`
-    @import url('https://fonts.googleapis.com/css?family=Playfair+Display');
-    font-family: 'Playfair Display', serif;
-    font-size: 15px;
+  font-size: 3em;
 `
 
 const ArtistUnorderedList = styled.ul`
-    list-style: none;
+  list-style: none;
 `
 
 const TrackName = styled.div`
-    @import url('https://fonts.googleapis.com/css?family=Playfair+Display');
-    font-family: 'Playfair Display', serif;
-    font-size: 60px;
+  font-family: "HelveticaNeue-Light", "Helvetica Neue Light", "Helvetica Neue", Helvetica, Arial, "Lucida Grande", sans-serif;
+  font-size: 1.2em;
+	white-space: nowrap;
+	max-width: 80%;
+	overflow: hidden;
+	text-overflow: ellipsis;
 `
 const TrackCardInfo = styled.div`
-    @import url('https://fonts.googleapis.com/css?family=Playfair+Display');
-    font-family: 'Playfair Display', serif;
-    font-size: 25px;
+  font-size: 1em;
 `
 
 const TrackHipsterLevel = styled.div`
-    @import url('https://fonts.googleapis.com/css?family=Playfair+Display');
-    font-family: 'Playfair Display', serif;
-    font-size: 25px;
+  font-family: "HelveticaNeue-Light", "Helvetica Neue Light", "Helvetica Neue", Helvetica, Arial, "Lucida Grande", sans-serif;
+  font-size: 1em;
 `
 
 const BottomTitle = styled.div`
-    @import url('https://fonts.googleapis.com/css?family=Playfair+Display');
-    font-family: 'Playfair Display', serif;
-    font-size: 30px;
-    margin: 0 auto;
-    text-align: center;
+  font-size: 30px;
+  margin: 0 auto;
+  text-align: center;
 `
-
 
 const ArtistsAndTracks = (props) => {
     const {artists, profile, tracks, artistsAveragePopularity, tracksAveragePopularity, changeToNextPage} = props;
@@ -120,20 +162,22 @@ const ArtistsAndTracks = (props) => {
     if (artists, profile, tracks, artistsAveragePopularity, tracksAveragePopularity){
         let artistsToRender = [];
         let tracksToRender = [];
-        for (let i = 0; i < 3; i++){
+        for (let i = 0; i < 9; i++){
             artistsToRender.push(
                 <Artist key={i}>
                     <ArtistsBorder>
-                        <ArtistInfo>
-                            <ArtistName>{artistItems[i].name}</ArtistName>
-                            <ArtistCardInfo>Hipster Level: {100 - artistItems[i].popularity}</ArtistCardInfo>
-                        </ArtistInfo>
-                        <ArtistImage src={artistItems[i].images[2].url} />
+												<ArtistImage src={artistItems[i].images[2].url} hipsterRating={100 - artistItems[i].popularity}/>
+												<ArtistInfo>
+													<ArtistCardInfo>{100 - artistItems[i].popularity}</ArtistCardInfo>
+													<ArtistName>{artistItems[i].name}</ArtistName>
+												</ArtistInfo>
                     </ArtistsBorder>
                 </Artist>
-            )
+            );
         }
-        for (let i = 0; i < 3; i++){
+
+
+        for (let i = 0; i < 0; i++){
             let trackArtists = trackItems[i].artists.map(artist => artist.name);
             tracksToRender.push(
                 <Track key={i}>
@@ -146,27 +190,30 @@ const ArtistsAndTracks = (props) => {
                         </TrackInfo>
                     </Border>
                 </Track>
-            )
+            );
         }
         return (
             <div>
+              <center>
+                <SeeMore onClick={() => changeToNextPage("MoreArtistsAndTracks")}>
+                    See All Your Top Artists and Songs
+                </SeeMore>
+              </center>
+
                 <Title>
-                    Your Top Listned to Artists and Songs of All Time...
+                    Your Top Listened to Artists and Songs of All Time
                 </Title>
                 <ArtistsAndTracksContainer>
                     <Artists>
-                            {artistsToRender} 
+                            {artistsToRender}
                     </Artists>
                     <Tracks>
-                            {tracksToRender} 
+                            {tracksToRender}
                     </Tracks>
                 </ArtistsAndTracksContainer>
                 {/* <Title onClick={() => changeToNextPage("Genres")}>
                     See All Your Top Genres
                 </Title> */}
-                <Title onClick={() => changeToNextPage("MoreArtistsAndTracks")}>
-                    See All Your Top Artists and Songs
-                </Title>
             </div>
         );
     }
