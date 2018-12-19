@@ -39,14 +39,15 @@ const Wrapper = styled.div`
 class HipsterfyRouter extends React.Component {
   constructor(props) {
     super(props);
-    this.state = { 
+    this.state = {
       profile: null,
       tracks: null,
       tracksAveragePopularity: null,
       artists: null,
-      artistsAveragePopularity: null, 
+      artistsAveragePopularity: null,
       hasBeenSent: false,
-      currentPage: "Landing", // Should start at "Landing"
+      currentPage: "ArtistsAndTracks", // Should start at "Landing"
+      // currentPage: "Landing", // Should start at "Landing"
     }
 
     this.changeToNextPage = this.changeToNextPage.bind(this);
@@ -74,10 +75,10 @@ class HipsterfyRouter extends React.Component {
       url: 'https://api.spotify.com/v1/me',
       headers: {
         'Authorization':`Bearer ${access_token}`,
-      }, 
+      },
       success: (data) => {
         this.setState({profile: data});
-        // console.log('got profile', this.state);
+        console.log('got profile', this.state);
       },
       error: (err) => {
         console.log('err', err);
@@ -89,7 +90,7 @@ class HipsterfyRouter extends React.Component {
       url: 'https://api.spotify.com/v1/me/top/artists',
       headers: {
         'Authorization':`Bearer ${access_token}`,
-      }, 
+      },
       data: {
         'limit' : 50,
         'time_range': 'long_term'
@@ -99,7 +100,7 @@ class HipsterfyRouter extends React.Component {
           artists: data,
           artistsAveragePopularity: this.findAveragePopularityOfItems(data.items)
         });
-        // console.log('got artists', this.state);
+        console.log('got artists', this.state);
       },
       error: (err) => {
         console.log('err', err);
@@ -111,7 +112,7 @@ class HipsterfyRouter extends React.Component {
       url: 'https://api.spotify.com/v1/me/top/tracks',
       headers: {
         'Authorization':`Bearer ${access_token}`,
-      }, 
+      },
       data: {
         'limit' : 50,
         'time_range': 'long_term'
@@ -121,7 +122,7 @@ class HipsterfyRouter extends React.Component {
           tracks: data,
           tracksAveragePopularity: this.findAveragePopularityOfItems(data.items)
         });
-        // console.log('got tracks', this.state);
+        console.log('got tracks', this.state);
       },
       error: (err) => {
         console.log('err', err);
@@ -163,49 +164,49 @@ class HipsterfyRouter extends React.Component {
               transitionEnterTimeout={3000}
               transitionLeaveTimeout={3000}>
               {currentPage === "Landing" &&
-                <Landing 
-                  tracksAveragePopularity={tracksAveragePopularity} 
-                  artistsAveragePopularity={artistsAveragePopularity} 
-                  profile={profile} 
+                <Landing
+                  tracksAveragePopularity={tracksAveragePopularity}
+                  artistsAveragePopularity={artistsAveragePopularity}
+                  profile={profile}
                   changeToNextPage={this.changeToNextPage}
-                />  
+                />
               }
               {currentPage === "ArtistsAndTracks" &&
-              <ArtistsAndTracks 
-                tracks={tracks} 
-                artists={artists} 
-                profile={profile} 
-                tracksAveragePopularity={tracksAveragePopularity} 
+              <ArtistsAndTracks
+                tracks={tracks}
+                artists={artists}
+                profile={profile}
+                tracksAveragePopularity={tracksAveragePopularity}
                 artistsAveragePopularity={artistsAveragePopularity}
                 changeToNextPage={this.changeToNextPage}
               />
               }
               {currentPage === "MoreArtistsAndTracks" &&
-              <MoreArtistsAndTracks 
-                tracks={tracks} 
-                artists={artists} 
-                profile={profile} 
-                tracksAveragePopularity={tracksAveragePopularity} 
+              <MoreArtistsAndTracks
+                tracks={tracks}
+                artists={artists}
+                profile={profile}
+                tracksAveragePopularity={tracksAveragePopularity}
                 artistsAveragePopularity={artistsAveragePopularity}
                 changeToNextPage={this.changeToNextPage}
               />
               }
               {/* {currentPage === "Genre" &&
-              <Genres 
-                tracks={tracks} 
-                artists={artists} 
-                profile={profile} 
-                tracksAveragePopularity={tracksAveragePopularity} 
+              <Genres
+                tracks={tracks}
+                artists={artists}
+                profile={profile}
+                tracksAveragePopularity={tracksAveragePopularity}
                 artistsAveragePopularity={artistsAveragePopularity}
                 changeToNextPage={this.changeToNextPage}
               />
               } */}
               {currentPage === "Share" &&
-              <Share 
-                tracks={tracks} 
-                artists={artists} 
-                profile={profile} 
-                tracksAveragePopularity={tracksAveragePopularity} 
+              <Share
+                tracks={tracks}
+                artists={artists}
+                profile={profile}
+                tracksAveragePopularity={tracksAveragePopularity}
                 artistsAveragePopularity={artistsAveragePopularity}
                 changeToNextPage={this.changeToNextPage}
               />
